@@ -1,10 +1,14 @@
 import './App.css';
+import ImageUploader from './components/ImageUploader.tsx';
+import Filters from './components/Filters.tsx';
 
 function App() {
   return (
-    <h1 className="text-3xl font-bold underline">
-      Hello world!
-    </h1>
+    <div className=' flex'>
+      <ImageUploader/>
+      <Filters/>
+
+    </div>
 
   );
 }
