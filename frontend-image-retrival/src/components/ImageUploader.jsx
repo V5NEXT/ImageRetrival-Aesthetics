@@ -6,7 +6,7 @@ import Spinner from './Spinner';
 
 const ImageUploader = () => {
   const [ImageUploaded, setImageUploaded] = useState(false);
-  const [imageAsset, setimageAsset] = useState(null);
+  const [imageAsset, setimageAsset] = useState();
   const [loading, setloading] = useState(false);
   const [WrongImageType, setWrongImageType] = useState(false)
 
@@ -14,13 +14,15 @@ const ImageUploader = () => {
     const {type, name} = e.target.files[0];
 
     if(type === 'image/png' || type === 'image/svg' || type === 'image/jpg' || type === 'image/jpeg' || type === 'image/gif'||type === 'image/tiff'){
-      setloading(true);
       setWrongImageType(false);
-      const document = URL.createObjectURL(e.target.files[0])
-      setimageAsset(document)
+      setimageAsset(URL.createObjectURL(e.target.files[0]))
+      setImageUploaded(true);
+      setloading(false);
     }
     else{
+      setloading(true);
       setWrongImageType(true)
+      setImageUploaded(false)
     }
 
   }
@@ -43,13 +45,12 @@ const ImageUploader = () => {
           className='absolute bottom-3 right-3 p-3 rounded-full bg-white text-xl cursor-pointer outline-none hover:shadow-md transition-all ease-in-out'
           onClick={()=>{
             setimageAsset(null)
+            setImageUploaded(false)
           }}
           >
             <MdDelete/>
           </button>
-          </div>
-          
-          :<label>
+          </div>:<label>
                 <div className='flex flex-col items-center justify-center h-full'>
                   <div className='flex flex-col justify-center items-center'>
                   <p className='font-bols text-2xl'>
