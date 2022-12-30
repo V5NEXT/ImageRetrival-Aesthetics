@@ -1,25 +1,46 @@
-import React from 'react'
+import React, {useState} from 'react';
+import { AiOutlineCloudDownload } from 'react-icons/ai';
+import { MdDelete } from 'react-icons/md';
+
 
 const ImageUploader = () => {
+  const [ImageUploaded, setImageUploaded] = useState(false)
+  const [imageAsset, setimageAsset] = useState(null)
+
+  const uploadImage = () =>{
+    
+  }
+
   return (
-   <div className=" h-screen w-screen">
-    <main className="container">
-      <article aria-label="File Upload Modal" className="relative flex flex-col bg-white shadow-xl rounded-md" onDrop="dropHandler(event);" ondragover="dragOverHandler(event);" ondragleave="dragLeaveHandler(event);" onDragEnter="dragEnterHandler(event);">
-        <section className="overflow-auto p-8 flex flex-col">
-          <header className="border-dashed border-2 border-gray-400 py-12 flex flex-col justify-center items-center">
-            <p className="mb-3 font-semibold text-gray-900 flex flex-wrap justify-center">
-              <span>Drag and drop your</span>&nbsp;<span>files anywhere or</span>
-            </p>
-            <input id="hidden-input" type="file" multiple className="hidden" />
-            <button id="button" className="mt-2 rounded-sm px-3 py-1 bg-gray-200 hover:bg-gray-300 focus:shadow-outline focus:outline-none">
-              Upload a file
-            </button>
-          </header>
-        </section>
+<div className='flex flex-col justify-center items-center mt-5 lg:h-4/5'>
+<div className='flex lg:flex-row flex-col justify-center items-center bg-white lg:p-5 p-3 lg:w-4/5 w-full'>
+<div className='bg-secondaryColor p-3 flex flex-0.7 w-full'>
+ <div className='flex justify-center items-center flex-col border-2 border-dotted border-gray-300 p-3 w-full h-420'>
+ {ImageUploaded?<img src={imageAsset?.url} alt='User Uploaded Image'/>:<label>
+      <div className='flex flex-col items-center justify-center h-full'>
+        <div className='flex flex-col justify-center items-center'>
+        <p className='font-bols text-2xl'>
+          <AiOutlineCloudDownload/>
+        </p>
+        <p className='text-lg'>
+        Click to upload
+        </p>
+        </div>
+        <p className='mt-32 text-gray-400'>
+          Use high-quality JPG, SVG, PNG, GIF less than 20MB
+        </p>
+      </div>
+      <input
+      type="file"
+      name="upload-image"
+      onChange={uploadImage}
+      className='w-0 h-0'
+      />
+    </label>}
 
-
-      </article>
-    </main>
+ </div>
+ </div>
+ </div>
 </div>
   )
 }
