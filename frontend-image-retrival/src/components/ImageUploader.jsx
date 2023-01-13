@@ -8,11 +8,14 @@ const ImageUploader = () => {
   const [ImageUploaded, setImageUploaded] = useState(false);
   const [imageAsset, setimageAsset] = useState();
   const [loading, setloading] = useState(false);
-  const [WrongImageType, setWrongImageType] = useState(false)
+  const [WrongImageType, setWrongImageType] = useState(false);
+  const [name, setName] = useState(null);
+  const [type, setType] = useState(null);
 
   const uploadImage = (e) =>{
     const {type, name} = e.target.files[0];
-
+    setName(name);
+    setType(type);
     if(type === 'image/png' || type === 'image/svg' || type === 'image/jpg' || type === 'image/jpeg' || type === 'image/gif'||type === 'image/tiff'){
       setWrongImageType(false);
       setimageAsset(URL.createObjectURL(e.target.files[0]))
@@ -40,7 +43,41 @@ const ImageUploader = () => {
           
           <div className='relative h-full'>
           <img src={imageAsset} alt='uploaded-pic' className='h-full w-full'/>
-          <button
+          <h1 className='ext-4xl font-bold break-words mt-3'>Image Details</h1>
+          <table class="table-fixed">
+              <tbody>
+                <tr>
+                  <td>Dimensions : </td>
+                  <td>444*444</td>
+                </tr>
+                <tr>
+                  <td>Width : </td>
+                  <td>444</td>
+                </tr>
+                <tr>
+                  <td>Height : </td>
+                  <td>444</td>
+                </tr>
+                <tr>
+                  <td>Depth : </td>
+                  <td>24</td>
+                </tr>
+              </tbody>
+            </table> 
+            <h1 className='ext-4xl font-bold break-words mt-3'>File Details</h1>
+            <table class="table-fixed">
+              <tbody>
+                <tr>
+                  <td>Name : </td>
+                  <td>{name}</td>
+                </tr>
+                <tr>
+                  <td>Type : </td>
+                  <td>{type}</td>
+                </tr>
+              </tbody>
+            </table> 
+                    <button
           type='button'
           className='absolute bottom-3 right-3 p-3 rounded-full bg-white text-xl cursor-pointer outline-none hover:shadow-md transition-all ease-in-out'
           onClick={()=>{
