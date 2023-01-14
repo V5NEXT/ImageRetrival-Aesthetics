@@ -561,9 +561,12 @@ const Results = () => {
         "skip": 0,
         "limit": 30
         }
+ 
+    // if(!mockData?.length) return 'Loading...';
+
   return (
     <>
-    <div className='flex flex-row flex-wrap items-center justify-center h-screen'>
+    <div className='flex flex-row flex-wrap items-center justify-center h-screen overflow-scroll'>
         {mockData?mockData.products.map((product)=>(
                 <ItemCard product={product}/>
             )):
