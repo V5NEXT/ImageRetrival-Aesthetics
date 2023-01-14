@@ -21,6 +21,22 @@ const ImageUploader = () => {
       setimageAsset(URL.createObjectURL(e.target.files[0]))
       setImageUploaded(true);
       setloading(false);
+ 
+        e.preventDefault();
+    
+        const data = new FormData();
+        data.append('file', name);
+        data.append('filename', type);
+    
+        fetch('http://localhost:5000/imageUpload', {
+          method: 'POST',
+          body: data,
+        }).then((response) => {
+          response.json().then((body) => {
+            this.setState({ imageURL: `http://localhost:5000/${body.file}` });
+          });
+        });
+  
     }
     else{
       setloading(true);

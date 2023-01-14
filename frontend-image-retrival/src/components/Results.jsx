@@ -5,7 +5,6 @@ const Results = () => {
  
     const [imageSet, setImageSet] = useState([{}])
  
-
     useEffect(() => {
         fetch("/imageSet").then(
             res => res.json()
