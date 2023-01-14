@@ -31,7 +31,7 @@ const ImageUploader = () => {
   }
 
   return (
-          <div className='flex flex-col justify-center items-center mt-5 lg:h-4/5'>
+          <div className='flex flex-row justify-center items-center mt-5 lg:h-4/5'>
           <div className='flex lg:flex-row flex-col justify-center items-center bg-white lg:p-5 p-3 lg:w-4/5 w-full'>
           <div className='bg-secondaryColor p-3 flex flex-0.7 w-full'>
           <div className='flex justify-center items-center flex-col border-2 border-dotted border-gray-300 p-3 w-full h-420'>
@@ -42,41 +42,48 @@ const ImageUploader = () => {
           {ImageUploaded?
           
           <div className='relative h-full'>
-          <img src={imageAsset} alt='uploaded-pic' className='h-full w-full'/>
-          <h1 className='ext-4xl font-bold break-words mt-3'>Image Details</h1>
-          <table class="table-fixed">
-              <tbody>
-                <tr>
-                  <td>Dimensions : </td>
-                  <td>444*444</td>
-                </tr>
-                <tr>
-                  <td>Width : </td>
-                  <td>444</td>
-                </tr>
-                <tr>
-                  <td>Height : </td>
-                  <td>444</td>
-                </tr>
-                <tr>
-                  <td>Depth : </td>
-                  <td>24</td>
-                </tr>
-              </tbody>
-            </table> 
-            <h1 className='ext-4xl font-bold break-words mt-3'>File Details</h1>
-            <table class="table-fixed">
-              <tbody>
-                <tr>
-                  <td>Name : </td>
-                  <td>{name}</td>
-                </tr>
-                <tr>
-                  <td>Type : </td>
-                  <td>{type}</td>
-                </tr>
-              </tbody>
-            </table> 
+            <div className='flex flex-row'>
+              <div className='basis-1/2'>
+              <img src={imageAsset} alt='uploaded-pic' className='h-full w-full'/>
+              </div>
+              <div className='basis-1/2 ml-1'>
+              <h1 className='ext-4xl font-bold break-words mt-3'>Image Details</h1>
+              <table class="table-fixed">
+                <tbody>
+                  <tr>
+                    <td>Dimensions : </td>
+                    <td>444*444</td>
+                  </tr>
+                  <tr>
+                    <td>Width : </td>
+                    <td>444</td>
+                  </tr>
+                  <tr>
+                    <td>Height : </td>
+                    <td>444</td>
+                  </tr>
+                  <tr>
+                    <td>Depth : </td>
+                    <td>24</td>
+                  </tr>
+                </tbody>
+              </table> 
+              <h1 className='ext-4xl font-bold break-words mt-3'>File Details</h1>
+              <table class="table-fixed">
+                <tbody>
+                  <tr>
+                    <td>Name : </td>
+                    <td>{name}</td>
+                  </tr>
+                  <tr>
+                    <td>Type : </td>
+                    <td>{type}</td>
+                  </tr>
+                </tbody>
+              </table> 
+            </div>
+          </div>
+         
                     <button
           type='button'
           className='absolute bottom-3 right-3 p-3 rounded-full bg-white text-xl cursor-pointer outline-none hover:shadow-md transition-all ease-in-out'

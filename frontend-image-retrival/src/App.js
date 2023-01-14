@@ -1,6 +1,7 @@
 import './App.css';
 import ImageUploader from './components/ImageUploader.jsx';
 import Filters from './components/Filters.jsx';
+import Results from './components/Results';
 
 function App() {
   return (
@@ -15,6 +16,9 @@ function App() {
           <div class="basis-1/2">
             <Filters/>
           </div>
+        </div>
+        <div className='flex flex-row'>
+          <Results/>
         </div>
     </>
   );
