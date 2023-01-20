@@ -1,0 +1,12 @@
+{
+  "name": "kek",
+  "version": "1.0.0",
+  "description": "",
+  "start": "react-scripts start",
+  "main": "ImageUpload.js",
+  "scripts": {
+    "test": "echo 'no test'"
+  },
+  "author": "",
+  "license": "ISC"
+}
