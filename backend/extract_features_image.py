@@ -57,6 +57,7 @@ def extract_features_image(model, image_path):
 
     return json.dumps(output)
 
-test_image_path = "dataset_test/test.jpg"
-new_json = extract_features_image('VGG16', test_image_path)
-print(new_json)
+# test_image_path = "dataset_test/test.jpg"
+# new_json = extract_features_image('VGG16', test_image_path)
+# print(new_json)
+
