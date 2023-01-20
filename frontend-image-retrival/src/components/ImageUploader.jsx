@@ -64,7 +64,7 @@ const ImageUploader = () => {
               </div>
               <div className='basis-1/2 ml-1'>
               <h1 className='ext-4xl font-bold break-words mt-3'>Image Details</h1>
-              <table class="table-fixed">
+              <table className="table-fixed">
                 <tbody>
                   <tr>
                     <td>Dimensions : </td>
@@ -85,7 +85,7 @@ const ImageUploader = () => {
                 </tbody>
               </table> 
               <h1 className='ext-4xl font-bold break-words mt-3'>File Details</h1>
-              <table class="table-fixed">
+              <table className="table-fixed">
                 <tbody>
                   <tr>
                     <td>Name : </td>

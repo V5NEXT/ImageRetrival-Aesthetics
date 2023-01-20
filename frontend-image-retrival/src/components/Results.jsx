@@ -11,7 +11,7 @@ const Results = () => {
         ).then(
             data => {
                 setImageSet(data.imageSet.products)
-                console.log(data.imageSet.products)
+                console.log(data)
             }
         )
     }, [])
@@ -20,7 +20,7 @@ const Results = () => {
   return (
     <>
     <div className='flex flex-row flex-wrap items-center justify-center h-screen overflow-scroll'>
-        {
+        {/* {
             (typeof imageSet === 'undefined') ? (
                 <p>Loading...</p>
             ) : (
@@ -28,7 +28,7 @@ const Results = () => {
                     <ItemCard key={i} product={image}/>
                 ))
             )
-        }
+        } */}
     </div>
     </>
   )
