@@ -3,18 +3,18 @@ import ItemCard from './ItemCard';
 
 const Results = () => {
  
-    const [imageSet, setImageSet] = useState([{}])
+    // const [imageSet, setImageSet] = useState([{}])
  
-    useEffect(() => {
-        fetch("/imageSet").then(
-            res => res.json()
-        ).then(
-            data => {
-                setImageSet(data.imageSet.products)
-                console.log(data)
-            }
-        )
-    }, [])
+    // useEffect(() => {
+    //     fetch("/imageSet").then(
+    //         res => res.json()
+    //     ).then(
+    //         data => {
+    //             setImageSet(data.imageSet.products)
+    //             console.log(data)
+    //         }
+    //     )
+    // }, [])
     
 // if(!mockData?.length) return 'Loading...';
   return (

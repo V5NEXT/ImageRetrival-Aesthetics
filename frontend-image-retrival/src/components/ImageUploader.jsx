@@ -11,6 +11,7 @@ const ImageUploader = () => {
   const [WrongImageType, setWrongImageType] = useState(false);
   const [name, setName] = useState(null);
   const [type, setType] = useState(null);
+  const [data, setData] = useState(null)
 
   const uploadImage = (e) =>{
     const {type, name} = e.target.files[0];
@@ -25,17 +26,20 @@ const ImageUploader = () => {
         e.preventDefault();
     
         const data = new FormData();
-        data.append('file', name);
-        data.append('filename', type);
-    
-        fetch('http://localhost:5000/imageUpload', {
+        data.append('file', e.target.files[0]);
+        fetch('http://localhost:5000/upload', { 
           method: 'POST',
+          mode: 'cors',
           body: data,
         }).then((response) => {
-          response.json().then((body) => {
-            this.setState({ imageURL: `http://localhost:5000/${body.file}` });
-          });
-        });
+          if(response.ok){
+            response.json().then((body) => {
+              setData({ imageURL: `http://localhost:5000/upload/${body.file}` });
+                        });
+          }else{
+            console.log("Error: ",response.statusText);
+          }
+        }).catch(error => console.log("Error: ",error))
   
     }
     else{
@@ -45,6 +49,7 @@ const ImageUploader = () => {
     }
 
   }
+  
 
   return (
           <div className='flex flex-row justify-center items-center mt-5 lg:h-4/5'>
