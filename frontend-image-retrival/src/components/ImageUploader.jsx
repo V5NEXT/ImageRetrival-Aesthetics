@@ -34,6 +34,10 @@ const ImageUploader = () => {
         }).then((response) => {
           if(response.ok){
             response.json().then((body) => {
+              debugger;
+              // TODO: display images from response
+              // you can download an image by http://localhost:5000/images?path=dataset%2F15516736553_b169b67195_n.jpg
+              console.log(body.message)
               setData({ imageURL: `http://localhost:5000/upload/${body.file}` });
                         });
           }else{
