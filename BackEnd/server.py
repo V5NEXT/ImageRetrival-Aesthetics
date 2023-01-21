@@ -3,6 +3,7 @@ from flask_cors import CORS
 from extract_features_image import *
 from features_to_kmeans_pca import *
 import os
+import matplotlib.pyplot as plt
 
 app = Flask(__name__)
 # CORS(app, origins=["http://localhost:3000/"])
@@ -15,11 +16,15 @@ def handle_upload():
     if image_file:
         try:
             # Save the file to disk
-            image_file.save(os.path.join(app.root_path, "Image/image.jpg")) 
+            image_file.save(os.path.join(app.root_path, "Image/image.jpg"))
 
             # uploaded img json {"filename" : [], "feature" : []}
             response = extract_features_image("Color", os.path.join(app.root_path, "Image/image.jpg")) 
-            output = featuresToKmeansPCA( os.path.join(app.root_path, "features/features_color.json"), 20, 4, response)
+            output = featuresToKmeansPCA( os.path.join(app.root_path, "features/features_color.json"), 6, 2, response)
+
+            fig = plotPCA(output)
+            plt.show()
+            fig.savefig(os.path.join(app.root_path, "Image/fig.jpg"))
             print(output)
             return jsonify({"message": output}), 200
         except Exception as e:

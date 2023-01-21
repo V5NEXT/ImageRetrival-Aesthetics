@@ -86,19 +86,32 @@ def featuresToKmeansPCA(json_path, n_images, n_clusters, uploaded_img_json):
 
 # output = featuresToKmeansPCA("json_path", 30, 4, "uploaded_img_json_path")
 
-def plotPCA(json_string):    
-    # Plot the clusters using PCA
-    # json_string = {"filenames" : filenames,
-    #         "coordinates" : coordinates,
-    #         "cluster_assignments" : clusters_list,
-    #         "cluster_centers" : cluster_centers_list
-    #         }
+# def plotPCA(json_string):    
+#     # Plot the clusters using PCA
+#     # json_string = {"filenames" : filenames,
+#     #         "coordinates" : coordinates,
+#     #         "cluster_assignments" : clusters_list,
+#     #         "cluster_centers" : cluster_centers_list
+#     #         }
+#     import matplotlib.pyplot as plt
+#     fig = plt.figure()
+#     data_to_plot = json.loads(json_string)
+#     clusters = np.array(data_to_plot["cluster_assignments"])
+#     cluster_centers = np.array(data_to_plot["cluster_centers"])
+#     coordinates = np.array(data_to_plot["coordinates"])
+#     fig.scatter(coordinates[:, 0], coordinates[:, 1], c=clusters)
+#     fig.scatter(cluster_centers[:, 0], cluster_centers[:, 1], color="red")
+#     fig.show()
+#     return fig
+
+def plotPCA(json_string): 
     import matplotlib.pyplot as plt
+    fig = plt.figure()
+    ax = fig.add_subplot(1,1,1)
     data_to_plot = json.loads(json_string)
     clusters = np.array(data_to_plot["cluster_assignments"])
     cluster_centers = np.array(data_to_plot["cluster_centers"])
     coordinates = np.array(data_to_plot["coordinates"])
-
-    plt.scatter(coordinates[:, 0], coordinates[:, 1], c=clusters)
-    plt.scatter(cluster_centers[:, 0], cluster_centers[:, 1], color="red")
-    plt.show()
+    ax.scatter(coordinates[:, 0], coordinates[:, 1], c=clusters)
+    ax.scatter(cluster_centers[:, 0], cluster_centers[:, 1], color="red")
+    return fig

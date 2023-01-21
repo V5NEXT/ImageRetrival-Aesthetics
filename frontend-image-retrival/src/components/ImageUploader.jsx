@@ -41,10 +41,9 @@ const ImageUploader = () => {
               setData({ imageURL: `http://localhost:5000/upload/${body.file}` });
                         });
           }else{
-            console.log("Error: ",response.statusText);
+            console.log("Error: ", response.statusText);
           }
-        }).catch(error => console.log("Error: ",error))
-  
+        }).catch(error => console.log("Error: ", error))
     }
     else{
       setloading(true);
