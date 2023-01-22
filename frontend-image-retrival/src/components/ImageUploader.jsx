@@ -26,7 +26,10 @@ const ImageUploader = () => {
         e.preventDefault();
     
         const data = new FormData();
+
         data.append('file', e.target.files[0]);
+        localStorage.setItem('image', data);
+
         fetch('http://localhost:5000/upload', { 
           method: 'POST',
           mode: 'cors',
@@ -34,16 +37,13 @@ const ImageUploader = () => {
         }).then((response) => {
           if(response.ok){
             response.json().then((body) => {
-              debugger;
-              // TODO: display images from response
-              // you can download an image by http://localhost:5000/images?path=dataset%2F15516736553_b169b67195_n.jpg
-              console.log(body.message)
               setData({ imageURL: `http://localhost:5000/upload/${body.file}` });
                         });
           }else{
-            console.log("Error: ", response.statusText);
+            console.log("Error: ",response.statusText);
           }
-        }).catch(error => console.log("Error: ", error))
+        }).catch(error => console.log("Error: ",error))
+  
     }
     else{
       setloading(true);

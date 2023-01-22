@@ -4,7 +4,8 @@ from extract_features_image import *
 from features_to_kmeans_pca import *
 import os
 import matplotlib.pyplot as plt
-
+from aestetics_score import *
+from get_info import *
 app = Flask(__name__)
 # CORS(app, origins=["http://localhost:3000/"])
 CORS(app)
@@ -17,21 +18,68 @@ def handle_upload():
         try:
             # Save the file to disk
             image_file.save(os.path.join(app.root_path, "Image/image.jpg"))
-
-            # uploaded img json {"filename" : [], "feature" : []}
-            response = extract_features_image("Color", os.path.join(app.root_path, "Image/image.jpg")) 
-            output = featuresToKmeansPCA( os.path.join(app.root_path, "features/features_color.json"), 6, 2, response)
-
-            fig = plotPCA(output)
-            plt.show()
-            fig.savefig(os.path.join(app.root_path, "Image/fig.jpg"))
-            print(output)
-            return jsonify({"message": output}), 200
+            img_info = getInfo(os.path.join(app.root_path, "Image/image.jpg"))
+            
+            return jsonify({"message": img_info}), 200
         except Exception as e:
             print(e)
             return jsonify({"error": str(e)}), 500
     else:
-        return jsonify({"error": "No file found"}), 400
+        return jsonify({"error": "No file found"}), 404
+
+@app.route("/filters", methods=["POST"])
+def handle_run():
+    # Get the uploaded file
+    data = request.get_data()
+    if data:
+        try:
+            data = data.decode()
+            data_json = json.loads(data)
+            method = data_json["method"]
+            n_clusters = data_json["clusters"]
+            n_images = data_json["images"]
+            print(type(method), type(n_images), type(n_clusters))
+            
+            # uploaded img json {"filename" : [], "feature" : []}
+            uploaded_image_json = extract_features_image(method, os.path.join(app.root_path, "Image/image.jpg")) 
+            output = featuresToKmeansPCA( os.path.join(app.root_path, "features/features_" + method + ".json"), n_images, n_clusters, uploaded_image_json)
+            fig = plotPCA(output)
+            plt.show()
+            fig.savefig(os.path.join(app.root_path, "Image/fig.jpg")) 
+            print(output)
+
+            thresholded, edges = tresh_edges(os.path.join(app.root_path, "Image/image.jpg"))
+
+            cv2.imwrite(os.path.join(app.root_path, "Image/thresholded.jpg"), thresholded)
+            cv2.imwrite(os.path.join(app.root_path, "Image/edges.jpg"), edges)
+
+            output_json = json.loads(output)
+            print(output)
+            filenames = output_json["filenames"]
+            print(filenames)
+            scores_arr = []
+            for file in filenames:
+                score = calculate_aesthetics(file)
+                scores_arr.append(score)
+            scores = scores_arr
+            mean_score = int(np.mean(scores))
+
+            final_output = {
+                            "scatterPlot" : "http://localhost:5000/images?path=Image%2Ffig.jpg",
+                            "cordinates" : output,
+                            "aesthetics" : {
+                            "threshold" : "http://localhost:5000/images?path=Image%2Fthresholded.jpg",
+                            "canny" : "http://localhost:5000/images?path=Image%2Fedges.jpg",
+                            "scores" : scores,
+                            "avg_score" : mean_score
+                            }
+                            }
+            return jsonify({"message": final_output}), 200
+        except Exception as e:
+            print(e)
+            return jsonify({"error": str(e)}), 500
+    else:
+        return jsonify({"error": "No file found"}), 404
 
 # @app.route("/run", methods=["GET"])
 # def handle_run():
@@ -42,6 +90,7 @@ def handle_upload():
 
 @app.route("/images", methods=["GET"])
 def getImages():
+    
     if request.args.get("path") != None:
         return send_file(os.path.join(app.root_path, request.args.get("path")), mimetype="image/jpeg")
     else:
