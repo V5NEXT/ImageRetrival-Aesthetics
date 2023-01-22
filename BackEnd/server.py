@@ -30,6 +30,7 @@ def handle_upload():
 @app.route("/filters", methods=["POST"])
 def handle_run():
     # Get the uploaded file
+
     data = request.get_data()
     if data:
         try:
@@ -44,7 +45,6 @@ def handle_run():
             uploaded_image_json = extract_features_image(method, os.path.join(app.root_path, "Image/image.jpg")) 
             output = featuresToKmeansPCA( os.path.join(app.root_path, "features/features_" + method + ".json"), n_images, n_clusters, uploaded_image_json)
             fig = plotPCA(output)
-            plt.show()
             fig.savefig(os.path.join(app.root_path, "Image/fig.jpg")) 
             print(output)
 
@@ -57,13 +57,26 @@ def handle_run():
             print(output)
             filenames = output_json["filenames"]
             print(filenames)
+
+            #Aestetic scores
             scores_arr = []
             for file in filenames:
                 score = calculate_aesthetics(file)
                 scores_arr.append(score)
-            scores = scores_arr
+            scores = [int(x) for x in scores_arr]
+            print(scores)
             mean_score = int(np.mean(scores))
+            
+            #List of images links 
+            links=[]
+            for i in range(len(filenames)):
+                img_name = filenames[i][8:-1]
+                print(img_name)
+                links.append("http://localhost:5000/images?path=dataset%2F" + img_name + "g")
 
+            cluster_assign = output_json["cluster_assignments"]
+            link_and_cluster = list(zip(links, cluster_assign))
+            
             final_output = {
                             "scatterPlot" : "http://localhost:5000/images?path=Image%2Ffig.jpg",
                             "cordinates" : output,
@@ -71,7 +84,9 @@ def handle_run():
                             "threshold" : "http://localhost:5000/images?path=Image%2Fthresholded.jpg",
                             "canny" : "http://localhost:5000/images?path=Image%2Fedges.jpg",
                             "scores" : scores,
-                            "avg_score" : mean_score
+                            "avg_score" : mean_score,
+                            "links_and_cluster" : link_and_cluster,
+                            "links": links
                             }
                             }
             return jsonify({"message": final_output}), 200

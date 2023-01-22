@@ -5,6 +5,9 @@ import Spinner from './Spinner';
 
 
 const ImageUploader = () => {
+  const [width, setWidth] = useState(null);
+  const [height, setHeight] = useState(null);
+  const [depth, setDepth] = useState(null);
   const [ImageUploaded, setImageUploaded] = useState(false);
   const [imageAsset, setimageAsset] = useState();
   const [loading, setloading] = useState(false);
@@ -22,7 +25,7 @@ const ImageUploader = () => {
       setimageAsset(URL.createObjectURL(e.target.files[0]))
       setImageUploaded(true);
       setloading(false);
- 
+      
         e.preventDefault();
     
         const data = new FormData();
@@ -38,6 +41,10 @@ const ImageUploader = () => {
           if(response.ok){
             response.json().then((body) => {
               setData({ imageURL: `http://localhost:5000/upload/${body.file}` });
+              let jsObject = JSON.parse(body?.message);
+              setDepth(jsObject?.depth);
+              setWidth(jsObject?.width);
+              setHeight(jsObject?.height)
                         });
           }else{
             console.log("Error: ",response.statusText);
@@ -76,19 +83,19 @@ const ImageUploader = () => {
                 <tbody>
                   <tr>
                     <td>Dimensions : </td>
-                    <td>444*444</td>
+                    <td>{width}*{height}</td>
                   </tr>
                   <tr>
                     <td>Width : </td>
-                    <td>444</td>
+                    <td>{width}</td>
                   </tr>
                   <tr>
                     <td>Height : </td>
-                    <td>444</td>
+                    <td>{height}</td>
                   </tr>
                   <tr>
                     <td>Depth : </td>
-                    <td>24</td>
+                    <td>{depth}</td>
                   </tr>
                 </tbody>
               </table> 
