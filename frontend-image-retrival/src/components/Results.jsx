@@ -7,16 +7,19 @@ import sampleImg from '../img/sample.png'
 
 const Results = () => {
     const {data} = useContext(DataContext);
-    const [score, setScore] = useState(0)
+    const [score, setScore] = useState(0);
+    const [loading, setLoading] = useState(false);
     const Data = data;
     const [firstOccurrences, setfirstOccurrences] = useState([])
 
     useEffect(() => {
+        setLoading(true)
         const score = Data?.message?.aesthetics?.scores
         if (score){
+            setLoading(false)
             const score = Data?.message?.aesthetics?.scores
             let lastItem = score[score?.length - 1];
-          setScore(lastItem)
+            setScore(lastItem)
             let array = Data?.message?.aesthetics?.links_and_cluster
             let uniqueValues = new Set();
             let newFirstOccurrences = [...firstOccurrences];
@@ -33,11 +36,11 @@ const Results = () => {
         }
     }, [data])  
 
-if(Data === undefined){
-    return <>
-    <img src={sampleImg} alt="Your image" className="absolute top-0 left-0 h-full w-full object-cover" />
-    <p>Please Select Filters</p>
-    </>
+if(loading === true){
+    return <div class="bg-orange-100 border-l-4 w-screen border-orange-500 text-orange-700 p-4 text-center mt-5" role="alert">
+                    <p class="font-bold">No Data to Display</p>
+                    <p>Please Select the filters!</p>
+         </div>
 }
 else{
   return (

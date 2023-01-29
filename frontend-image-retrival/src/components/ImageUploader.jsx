@@ -59,6 +59,10 @@ const ImageUploader = () => {
     }
 
   }
+
+  const reload = ()=>{
+    window.location.reload(); 
+   }
   
 
   return (
@@ -121,6 +125,7 @@ const ImageUploader = () => {
           onClick={()=>{
             setimageAsset(null)
             setImageUploaded(false)
+            reload()
           }}
           >
             <MdDelete/>

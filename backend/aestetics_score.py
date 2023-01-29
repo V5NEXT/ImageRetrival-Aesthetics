@@ -38,6 +38,7 @@ def calculate_aesthetics(image_path):
     # if len(lines) == 0:
     #     print("No lines detected for analisys. Look at the parameters of cv2.HoughLines")
     #     return 0
+    m = 0
     for line in lines:
         rho, theta = line[0]
         angles.append(theta)
@@ -48,6 +49,12 @@ def calculate_aesthetics(image_path):
         x2 = int(x0 - diagonal * (-np.sin(theta)))
         y2 = int(y0 - diagonal * (np.cos(theta)))
         positions.append(((x1, y1), (x2, y2)))
+        m += 1
+
+        if(m > 20):
+            break
+        else:
+            continue
 
     # Calculate the aesthetics score
     score = 0
@@ -59,7 +66,7 @@ def calculate_aesthetics(image_path):
         # Golden Mean
         score += sum(abs(angle - (np.pi/4)) < (np.pi/18) for angle in angles)
         score += sum(abs(angle - (3*np.pi/4)) < (np.pi/18) for angle in angles)
-        
+
         # Golden Triangles
         for pos1 in positions:
             for pos2 in positions:
