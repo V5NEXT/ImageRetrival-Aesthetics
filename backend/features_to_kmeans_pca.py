@@ -117,6 +117,7 @@ def plotPCA(json_string):
     coordinates = np.array(data_to_plot["coordinates"])
     ax.scatter(coordinates[:, 0], coordinates[:, 1], c=clusters)
     ax.scatter(cluster_centers[:, 0], cluster_centers[:, 1], color="red")
-#     ax.scatter(coordinates[-1, 0], coordinates[-1, 1], color="blue", s=4)
+    ax.scatter(coordinates[-1, 0], coordinates[-1, 1],
+               s=50, color="black", marker='x')
 
     return fig

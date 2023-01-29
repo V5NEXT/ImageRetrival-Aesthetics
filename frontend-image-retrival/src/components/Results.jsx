@@ -37,8 +37,8 @@ const Results = () => {
     }, [data])  
 
 if(loading === true){
-    return <div class="bg-orange-100 border-l-4 w-screen border-orange-500 text-orange-700 p-4 text-center mt-5" role="alert">
-                    <p class="font-bold">No Data to Display</p>
+    return <div className="bg-orange-100 border-l-4 w-screen border-orange-500 text-orange-700 p-4 text-center mt-5" role="alert">
+                    <p className="font-bold">No Data to Display</p>
                     <p>Please Select the filters!</p>
          </div>
 }

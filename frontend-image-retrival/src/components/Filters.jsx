@@ -16,7 +16,6 @@ const Filters  = () => {
     setMethod(e.target.value);
 };
 const SubmitFilters = ()=>{
-    
 setLoading(true)
 const myjson = {
   "method": method,
@@ -70,7 +69,7 @@ return (
           checked={method === "VGG16"}
           onChange={onOptionChange}
           />            
-          <label className="form-check-label inline-block text-gray-800" for="flexRadioDefault1">
+          <label className="form-check-label inline-block text-gray-800" htmlFor="flexRadioDefault1">
               VGG16
             </label>
         </div>
@@ -84,7 +83,7 @@ return (
           id="InceptionV3"
           checked={method === "InceptionV3"}
           onChange={onOptionChange}
-          />     <label className="form-check-label inline-block text-gray-800" for="flexRadioDefault2">
+          />     <label className="form-check-label inline-block text-gray-800" htmlFor="flexRadioDefault2">
               InceptionV3
               </label>
           </div>
@@ -99,7 +98,7 @@ return (
           checked={method === "ResNet50"}
           onChange={onOptionChange}
           />              
-          <label className="form-check-label inline-block text-gray-800" for="flexRadioDefault2">
+          <label className="form-check-label inline-block text-gray-800" htmlFor="flexRadioDefault2">
               ResNet50
               </label>
           </div>
@@ -114,7 +113,7 @@ return (
           checked={method === "Color"}
           onChange={onOptionChange}
           />               
-           <label className="form-check-label inline-block text-gray-800" for="flexRadioDefault2">
+           <label className="form-check-label inline-block text-gray-800" htmlFor="flexRadioDefault2">
               Based on Color
               </label>
           </div>
@@ -150,7 +149,7 @@ return (
     <div className='flex mt-4 flex-col items-center'>
     <a href="#_" onClick={SubmitFilters} className="inline-flex items-center justify-center w-full px-6 py-3 mb-2 text-lg text-white bg-indigo-500 rounded-md hover:bg-indigo-800 sm:w-auto sm:mb-0" data-primary="green-400" data-rounded="rounded-2xl" data-primary-reset="{}">
       Run 
-    <svg className="w-4 h-4 ml-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+    <svg className="w-4 h-4 ml-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd"></path></svg>
     </a>
     </div>
     </>    
