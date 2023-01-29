@@ -58,13 +58,13 @@ else{
                 </div>                
                 </div>
                 <div className="w-1/2">
-                <p className="text-gray-600 text-xs italic">* Figure depicts the thresholded image used for calculating the aesthetics score</p>
-                <div className="relative w-64 h-64 mt-2">
+                <p className="text-gray-600 text-xs italic">* Figure depicts the thresholded image for calculating the aesthetics score</p>
+                <div className="relative w-64 h-64 mt-2 content-center	">
                     {Data?.message?.aesthetics?.threshold?<img src={Data?.message?.aesthetics?.threshold} alt="Your image" className="absolute top-0 left-0 h-full w-full object-cover" />:<img src={sampleImg} alt="Your image" className="absolute top-0 left-0 h-full w-full object-cover" />}
                 </div>  
                 </div>
                 </div>
-                <div className="flex">
+                <div className="flex mt-5">
                 <span className="w-1/2">
                 <label className="block text-gray-700 font-medium mb-2">Average Aesthetic Score: {Data?.message?.aesthetics?.avg_score}</label>
                 </span>
@@ -73,9 +73,9 @@ else{
                 </span>
                 </div>
                 <div className='flex mt-2'>
-            {firstOccurrences.map((item, index)=>{
-                    return <ItemCard key={index} product={item}/>
-                })}
+                    {firstOccurrences.map((item, index)=>{
+                            return <ItemCard key={index} product={item}/>
+                        })}
             </div>
             </div>
             </div>

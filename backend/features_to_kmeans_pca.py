@@ -1,6 +1,6 @@
 from sklearn.cluster import KMeans
 import numpy as np
-# import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 from sklearn.decomposition import PCA
 import json
 import random
@@ -86,38 +86,22 @@ def featuresToKmeansPCA(json_path, n_images, n_clusters, uploaded_img_json):
 
     return json_string
 
-# output = featuresToKmeansPCA("json_path", 30, 4, "uploaded_img_json_path")
-
-# def plotPCA(json_string):
-#     # Plot the clusters using PCA
-#     # json_string = {"filenames" : filenames,
-#     #         "coordinates" : coordinates,
-#     #         "cluster_assignments" : clusters_list,
-#     #         "cluster_centers" : cluster_centers_list
-#     #         }
-#     import matplotlib.pyplot as plt
-#     fig = plt.figure()
-#     data_to_plot = json.loads(json_string)
-#     clusters = np.array(data_to_plot["cluster_assignments"])
-#     cluster_centers = np.array(data_to_plot["cluster_centers"])
-#     coordinates = np.array(data_to_plot["coordinates"])
-#     fig.scatter(coordinates[:, 0], coordinates[:, 1], c=clusters)
-#     fig.scatter(cluster_centers[:, 0], cluster_centers[:, 1], color="red")
-#     fig.show()
-#     return fig
-
 
 def plotPCA(json_string):
-    import matplotlib.pyplot as plt
-    fig = plt.figure()
+    fig = plt.figure(dpi=300)
     ax = fig.add_subplot(1, 1, 1)
     data_to_plot = json.loads(json_string)
     clusters = np.array(data_to_plot["cluster_assignments"])
     cluster_centers = np.array(data_to_plot["cluster_centers"])
     coordinates = np.array(data_to_plot["coordinates"])
-    ax.scatter(coordinates[:, 0], coordinates[:, 1], c=clusters)
-    ax.scatter(cluster_centers[:, 0], cluster_centers[:, 1], color="red")
+    for i in set(clusters):
+        ax.scatter(coordinates[clusters == i, 0], coordinates[clusters ==
+                   i, 1], c=np.random.rand(3,), label=f'Cluster {i}')
+        # ax.scatter(coordinates[:, 0], coordinates[:, 1], c=clusters, label=[f'Cluster {i}' for i in set(clusters)])
+    ax.scatter(cluster_centers[:, 0], cluster_centers[:,
+               1], color="red", label="Cluster centers")
     ax.scatter(coordinates[-1, 0], coordinates[-1, 1],
-               s=50, color="black", marker='x')
-
+               s=100, color="black", marker='x', label="Your image")
+    ax.legend()
+    ax.set_title('Scatter plot of clusters')
     return fig
