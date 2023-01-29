@@ -33,14 +33,12 @@ fetch('http://localhost:5000/filters', {
 }).then((response) => {
   if(response.ok){
     response.json().then((body) => {
-      console.log(body)
       setData(body)
                     });
   }else{
     console.log("Error: ",response.statusText);
   }
 }).catch(error => console.log("Error: ",error))
-console.log("Json govna", myjson)
 }
 
   return (

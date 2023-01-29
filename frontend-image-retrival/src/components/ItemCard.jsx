@@ -1,7 +1,6 @@
 import React from 'react'
 
 const ItemCard = ({product}) => {
-    console.log("blablabal",product)
   return (
 <div className="max-w-sm rounded overflow-hidden shadow-lg ml-5">
             <img className="w-full" src={product?.image} alt="Sunset in the mountains"/>

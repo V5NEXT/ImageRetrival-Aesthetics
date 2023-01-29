@@ -10,14 +10,15 @@ from tensorflow.keras.preprocessing.image import load_img, img_to_array
 dir_path = "./dataset/test_dataset/"
 files = os.listdir(dir_path)
 
+
 def extract_featureHSV(im_path):
     # Load image
     img = cv2.imread(im_path)
     # Convert to HSV color space
     hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
     # Extract the hue channel
-    hsv = hsv[:,:,0].ravel()
-    return hsv[0:40000] # feature vector
+    hsv = hsv[:, :, 0].ravel()
+    return hsv[0:40000]  # feature vector
 
 # from sklearn.cluster import KMeans
 
@@ -40,18 +41,21 @@ def create_similarity_matrix(image_features, distance_measure):
     if distance_measure == "euclidean":
         distance = euclidean
     elif distance_measure == "cosine_similarity":
-        distance = lambda x,y : cosine_similarity(x.reshape(1, -1), y.reshape(1, -1))
+        def distance(x, y): return cosine_similarity(
+            x.reshape(1, -1), y.reshape(1, -1))
     elif distance_measure == "manhattan":
-        distance = lambda x,y : np.sum(np.abs(np.array(x)-np.array(y)))
+        def distance(x, y): return np.sum(np.abs(np.array(x)-np.array(y)))
     else:
         print("Provide a similarity measure")
 
     # calculate the euclidean distance between all pairs of images and store the result in the similarity matrix
     for i in range(num_images):
-        for j in range(i, num_images): 
-            similarity_matrix[i,j] = distance(image_features[i], image_features[j])
-            similarity_matrix[j,i] = similarity_matrix[i,j]
+        for j in range(i, num_images):
+            similarity_matrix[i, j] = distance(
+                image_features[i], image_features[j])
+            similarity_matrix[j, i] = similarity_matrix[i, j]
     return similarity_matrix
+
 
 features = []
 for file in files:
@@ -65,10 +69,11 @@ image_features = features.copy()
 similarity_mat = create_similarity_matrix(image_features, "manhattan")
 
 # use Spectral Clustering to partition the data into 5 clusters
-clustering = SpectralClustering(n_clusters=2, affinity='precomputed').fit(similarity_mat)
+clustering = SpectralClustering(
+    n_clusters=2, affinity='precomputed').fit(similarity_mat)
 
 # get the cluster assignments for each image
 cluster_assignments = clustering.labels_
 
 name_and_cluster = zip(files, cluster_assignments)
-print(list(name_and_cluster))
+# print(list(name_and_cluster))

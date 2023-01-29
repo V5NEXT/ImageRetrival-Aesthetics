@@ -3,6 +3,7 @@ import Spinner from './Spinner';
 import DataContext from './dataContext';
 import { useContext } from 'react';
 import ItemCard from './ItemCard';
+import sampleImg from '../img/sample.png'
 
 const Results = () => {
     const {data} = useContext(DataContext);
@@ -33,19 +34,19 @@ const Results = () => {
     }, [data])  
 
 
-{!Data && <Spinner/>}
+{Data?.message && <Spinner message="Data is Loading!...."/>}
   return (
     <>
             <div className="flex">
             <div className="w-1/2">
-                <img src={Data?.message?.scatterPlot} alt='Scatter plot' className='h-full w-full'/>
+                {Data?.message?.scatterPlot?<img src={Data?.message?.scatterPlot} alt='Scatter plot' className='h-full w-full'/>:<img src={sampleImg} alt='Scatter plot' className='h-full w-full'/>}
             </div>
             <div className="w-1/2 flex flex-col">
                 <div className="flex mt-5">
                 <div className="w-1/2">
                 <p className="text-gray-600 text-xs italic">* Figure depicts the edges used for calculating the aesthetics score</p>
                 <div className="relative w-64 h-64 mt-2">
-                <img src={Data?.message?.aesthetics?.canny} alt="Your image" className="absolute top-0 left-0 h-full w-full object-cover" />
+                    {Data?.message?.aesthetics?.canny?<img src={Data?.message?.aesthetics?.canny} alt="Your image" className="absolute top-0 left-0 h-full w-full object-cover" />:<img src={sampleImg} alt="Your image" className="absolute top-0 left-0 h-full w-full object-cover" />}
                 </div>                
                 </div>
                 <div className="w-1/2">
@@ -58,17 +59,15 @@ const Results = () => {
                 <div className="flex">
                 <span className="w-1/2">
                 <label className="block text-gray-700 font-medium mb-2">Average Aesthetic Score: {Data?.message?.aesthetics?.avg_score}</label>
-                {/* <h6 class="mb-4 text-3xl font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-6xl">Average Aesthetic Score: {Data?.message?.aesthetics?.avg_score}</h6> */}
                 </span>
                 <span className="w-1/2">
                 <label className="block text-gray-700 font-medium mt-2">Aesthetic Score for uploaded image: {score}</label>
-                {/* <h6 class="mb-4 text-3xl font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-6xl">Aesthetic Score for closest clusters: {Data?.message?.aesthetics?.scores}</h6> */}
                 </span>
                 </div>
                 <div className='flex mt-2'>
             {firstOccurrences.map((item, index)=>{
-    return <ItemCard key={index} product={item}/>
-})}
+                    return <ItemCard key={index} product={item}/>
+                })}
             </div>
             </div>
             </div>
