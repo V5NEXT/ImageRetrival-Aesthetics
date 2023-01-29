@@ -33,8 +33,13 @@ const Results = () => {
         }
     }, [data])  
 
-
-{Data?.message && <Spinner message="Data is Loading!...."/>}
+if(Data === undefined){
+    return <>
+    <img src={sampleImg} alt="Your image" className="absolute top-0 left-0 h-full w-full object-cover" />
+    <p>Please Select Filters</p>
+    </>
+}
+else{
   return (
     <>
             <div className="flex">
@@ -52,7 +57,7 @@ const Results = () => {
                 <div className="w-1/2">
                 <p className="text-gray-600 text-xs italic">* Figure depicts the thresholded image used for calculating the aesthetics score</p>
                 <div className="relative w-64 h-64 mt-2">
-                <img src={Data?.message?.aesthetics?.threshold} alt="Your image" className="absolute top-0 left-0 h-full w-full object-cover" />
+                    {Data?.message?.aesthetics?.threshold?<img src={Data?.message?.aesthetics?.threshold} alt="Your image" className="absolute top-0 left-0 h-full w-full object-cover" />:<img src={sampleImg} alt="Your image" className="absolute top-0 left-0 h-full w-full object-cover" />}
                 </div>  
                 </div>
                 </div>
@@ -74,6 +79,7 @@ const Results = () => {
 
     </>
   )
+}
 }
 
 export default Results

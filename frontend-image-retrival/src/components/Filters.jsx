@@ -1,6 +1,7 @@
 import React,{useState} from 'react'
 import { useContext } from 'react';
 import DataContext from './dataContext';
+import Spinner from './Spinner';
 
 
 const Filters  = () => {
@@ -9,13 +10,14 @@ const Filters  = () => {
   const [images, setImages] = useState(5)
   const [img, setImg] = useState(null)
   const { setData } = useContext(DataContext);
+  const [loading, setLoading] = useState(false)
 
   const onOptionChange = e => {
     setMethod(e.target.value);
 };
 const SubmitFilters = ()=>{
     
-
+setLoading(true)
 const myjson = {
   "method": method,
   "clusters": clusters,
@@ -34,14 +36,23 @@ fetch('http://localhost:5000/filters', {
   if(response.ok){
     response.json().then((body) => {
       setData(body)
-                    });
+      setLoading(false);
+               
+    });
   }else{
     console.log("Error: ",response.statusText);
+    setLoading(false);
+
   }
-}).catch(error => console.log("Error: ",error))
+}).catch(error => 
+  console.log("Error: ",error))
 }
 
-  return (
+if(loading === true){
+  return <Spinner/>
+}
+else{
+return (
     <>
     <div className='flex mt-4'>
       <label className="block text-gray-700 text-sm font-bold mb-2">
@@ -144,6 +155,7 @@ fetch('http://localhost:5000/filters', {
     </div>
     </>    
   )
+}
 }
 
 export default Filters
