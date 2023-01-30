@@ -11,6 +11,8 @@ const Results = () => {
     const [loading, setLoading] = useState(false);
     const Data = data;
     const [firstOccurrences, setfirstOccurrences] = useState([])
+    const [obj, setObj] = useState({});
+
 
     useEffect(() => {
         setLoading(true)
@@ -21,6 +23,12 @@ const Results = () => {
             let lastItem = score[score?.length - 1];
             setScore(lastItem)
             let array = Data?.message?.aesthetics?.links_and_cluster
+            const updatedObj = {};
+            array.forEach(([, cluster]) => {
+              if (!updatedObj[cluster]) updatedObj[cluster] = 0;
+              updatedObj[cluster]++;
+            });
+            setObj(updatedObj);
             let uniqueValues = new Set();
             let newFirstOccurrences = [...firstOccurrences];
             for (let sublist of array) {
@@ -36,15 +44,15 @@ const Results = () => {
         }
     }, [data])  
 
-if(loading === true){
-    return <div className="bg-orange-100 border-l-4 w-screen border-orange-500 text-orange-700 p-4 text-center mt-5" role="alert">
-                    <p className="font-bold">No Data to Display</p>
-                    <p>Please Select the filters!</p>
-         </div>
-}
-else{
-  return (
-    <>
+            if(loading === true){
+                return <div className="bg-orange-100 border-l-4 w-screen border-orange-500 text-orange-700 p-4 text-center mt-5" role="alert">
+                                <p className="font-bold">No Data to Display</p>
+                                <p>Please Select the filters!</p>
+                    </div>
+                    }
+        else{
+        return (
+            <>
             <div className="flex">
             <div className="w-1/2">
                 {Data?.message?.scatterPlot?<img src={Data?.message?.scatterPlot} alt='Scatter plot' className='h-full w-full'/>:<img src={sampleImg} alt='Scatter plot' className='h-full w-full'/>}
@@ -72,11 +80,26 @@ else{
                 <label className="block text-gray-700 font-medium mt-2">Aesthetic Score for uploaded image: {score}</label>
                 </span>
                 </div>
-                <div className='flex mt-2'>
-                    {firstOccurrences.map((item, index)=>{
-                            return <ItemCard key={index} product={item}/>
-                        })}
-            </div>
+                <div className="font-bold text-xl mt-2">
+                    Cluster Information :
+                </div>
+                <div className="w-full overflow-x-scroll mt-2">
+                <div className="flex flex-wrap">
+                    {firstOccurrences.map((item, index) => (
+                    <ItemCard key={index} product={item} />
+                    ))}
+                </div>
+                </div>
+                <div className="flex">
+                {Object.entries(obj).map(([key, value], index) => (
+                    <div
+                    key={key}
+                    className={`p-3 border ml-10 border-gray-400 rounded mr-3 ${index !== Object.entries(obj).length - 1 ? 'mr-3' : ''}`}
+                    >
+                    {`Cluster: ${key}, Items: ${value}`}
+                    </div>
+                ))}
+                </div>
             </div>
             </div>
 
