@@ -44,6 +44,9 @@ const Results = () => {
         }
     }, [data])  
 
+
+    
+
             if(loading === true){
                 return <div className="bg-orange-100 border-l-4 w-screen border-orange-500 text-orange-700 p-4 text-center mt-5" role="alert">
                                 <p className="font-bold">No Data to Display</p>
@@ -54,8 +57,10 @@ const Results = () => {
         return (
             <>
             <div className="flex">
+
             <div className="w-1/2">
-                {Data?.message?.scatterPlot?<img src={Data?.message?.scatterPlot} alt='Scatter plot' className='h-full w-full'/>:<img src={sampleImg} alt='Scatter plot' className='h-full w-full'/>}
+                {Data?.message?.scatterPlot?<img src={Data?.message?.scatterPlot} alt='Scatter plot' className='w-full'/>:<img src={sampleImg} alt='Scatter plot' className='h-full w-full'/>}
+                {Data?.message?.silouttePlot?<img src={Data?.message?.silouttePlot} alt='Scatter plot' className='w-full'/>:<img src={sampleImg} alt='Scatter plot' className='h-full w-full'/>}
             </div>
             <div className="w-1/2 flex flex-col">
                 <div className="flex mt-5">
@@ -83,14 +88,15 @@ const Results = () => {
                 <div className="font-bold text-xl mt-2">
                     Cluster Information :
                 </div>
-                <div className="w-full overflow-x-scroll mt-2">
+                <div className="w-full mt-2">
                 <div className="flex flex-wrap">
-                    {firstOccurrences.map((item, index) => (
-                    <ItemCard key={index} product={item} />
+                {firstOccurrences.map(item => (
+                    <ItemCard key={item.id} product={item} />
                     ))}
+                    
+                                    </div>
                 </div>
-                </div>
-                <div className="flex">
+                <div className="flex mt-5">
                 {Object.entries(obj).map(([key, value], index) => (
                     <div
                     key={key}
@@ -102,7 +108,6 @@ const Results = () => {
                 </div>
             </div>
             </div>
-
     </>
   )
 }

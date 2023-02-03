@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 from sklearn.decomposition import PCA
 import json
 import random
+from sklearn.metrics import silhouette_samples, silhouette_score
 
 
 def featuresToKmeansPCA(json_path, n_images, n_clusters, uploaded_img_json):
@@ -52,6 +53,7 @@ def featuresToKmeansPCA(json_path, n_images, n_clusters, uploaded_img_json):
 
     # Get the cluster assignments for each data point
     clusters = kmeans.predict(X)
+    silhouetteScore(X, clusters, n_clusters)
 
     cluster_centers = list(
         zip(kmeans.cluster_centers_[:, 0], kmeans.cluster_centers_[:, 1]))
@@ -85,6 +87,42 @@ def featuresToKmeansPCA(json_path, n_images, n_clusters, uploaded_img_json):
     json_string = json.dumps(output)
 
     return json_string
+
+
+def silhouetteScore(X, clusters, n_clusters):
+    # Calculate the silhouette scores for each sample
+    silhouette_scores = silhouette_samples(X, clusters)
+    # Calculate the mean silhouette score
+    silhouette_avg = np.mean(silhouette_scores)
+    print("The mean silhouette score is:", silhouette_avg)
+
+    # Plot the silhouette plot
+    fig, ax = plt.subplots()
+    y_lower = 10
+    for i in range(n_clusters):
+        # Get the silhouette scores for samples in cluster i
+        cluster_silhouette_scores = silhouette_scores[clusters == i]
+        cluster_silhouette_scores.sort()
+
+        size_cluster_i = len(cluster_silhouette_scores)
+        y_upper = y_lower + size_cluster_i
+
+        color = plt.cm.Spectral(float(i) / n_clusters)
+        ax.fill_betweenx(np.arange(y_lower, y_upper), 0, cluster_silhouette_scores,
+                         facecolor=color, edgecolor=color, alpha=0.7)
+        ax.text(-0.05, y_lower + 0.5 * size_cluster_i, str(i))
+
+        y_lower = y_upper + 10
+
+    ax.axvline(x=silhouette_avg, color="red",
+               linestyle="--", label="Mean silhouette score")
+    ax.set_yticks([])
+    ax.set_xlim([-0.2, 1])
+    ax.set_xlabel("Silhouette Coefficient")
+    ax.set_ylabel("Cluster label")
+    ax.legend()
+    # Save the plot as an image file
+    plt.savefig("Image/silhouette_plot.png")
 
 
 def plotPCA(json_string):

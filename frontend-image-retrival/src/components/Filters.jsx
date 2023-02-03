@@ -142,7 +142,9 @@ return (
         <div className='basis-1/2'>
           <div className="form-check">
           <input type="number" id="images"  onChange={(e) => setImages(parseInt(e.target.value))} value={images} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  required/>
-          <p className="text-gray-600 text-xs italic">Number of Images used for clustering, eg: 2000</p>
+          <p className="text-gray-600 text-xs italic">Number of Images used for clustering, eg: 10 less than 2000</p>      
+          <p className="text-gray-600 text-xs font-bold">*Incresing the number of images will take more processing time</p>
+
         </div>
         </div>
     </div>
